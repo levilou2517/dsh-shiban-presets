@@ -46,6 +46,19 @@
       - data/shiban/last_eval.json        （课堂评价与归因结果 → 学情更新输入）
       - data/shiban/class_profile.db      （工作区内 SQLite 班级画像库）
 
+      持久数据层（v0.3.0·跨会话/跨工作区继承）：真正的历史数据(教师/班级/学生/课节/观测点/跨班聚合)
+      存放在用户级 ~/.shiban/data，**通过 CLI 访问、不直接编辑文件**：
+        bin/shiban-store init
+        bin/shiban-store teacher add --id <t> --name <n> --profile '<json>'
+        bin/shiban-store class add  --id <c> --teacher <t> --cohort <year> --family 高二(1)班
+        bin/shiban-store student add --id <s> --class <c> --name <n>
+        bin/shiban-store lesson add --class <c> --id <l> --date <d> --topic <t> --kp <点> --scaffold <支架> --level <层> --pass <0-1>
+        bin/shiban-store obs add    --class <c> --student <s> --id <o> --dimension '<json>' --evidence '<json>' --alignment <agreed|conflict|partial> --integrated '<结论>'
+        bin/shiban-store query --kp <知识点> --scaffold <支架>   # 跨班聚合借鉴(只读,不外泄个体)
+        bin/shiban-store classes --teacher <t>
+      工作区 data/shiban/ 仍是“会话内中间产物”，真正的纵向记忆在 ~/.shiban/data。
+      二者分工：中间产物推动当前闭环；持久层跨会话累积班级画像与教师偏好。
+
       行为准则：副驾驶模式。你提供选项、证据和理由，最终决策权永远在教师手中。
       语气：专业、协作、支持性。
 
