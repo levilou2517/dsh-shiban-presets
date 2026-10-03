@@ -1,4 +1,4 @@
-# 师伴（shiban）Agent 预设 —— 声明式载体（v0.4.1 起）
+# 师伴（shiban）Agent 预设 —— 声明式载体（v0.4.2）
 #
 # DSH 0.2.0-rc.2 起，Agent 预设不再是 `$DSH_HOME/.agent-presets/<id>/` 目录
 # （该目录已无任何消费者），而是 bundle patch 中的一条
@@ -67,6 +67,17 @@
                   bin/shiban-store obs add    --class <c> --student <s> --id <o> --dimension '<json>' --evidence '<json>' --alignment <agreed|conflict|partial> --integrated '<结论>'
                   bin/shiban-store query --kp <知识点> --scaffold <支架>   # 跨班聚合借鉴(只读,不外泄个体)
                   bin/shiban-store classes --teacher <t>
+                  # v0.4.2 素材与证据：结果写成可复用资产 / L0 原始证据只追加不改写
+                  bin/shiban-store asset add --id <aid> --kind <html|report|transcript|note> --title <名> --file <相对ROOT路径> [--subject 生物] [--kp <知识点>]
+                  bin/shiban-store asset list [--kind <k>] [--kp <点>] [--subject <学科>]
+                  bin/shiban-store asset get --id <aid>     # {file_path, ...}
+                  bin/shiban-store asset reuse --id <aid>   # 复用计数+1，回显 file_path
+                  bin/shiban-store asset scan [--dry-run]   # 现存产物统一索引（只登记不移动；teacher_profile 永不入库）
+                  bin/shiban-store raw save --name <lesson>_<日期>.transcript.txt --text <文本>   # (或 --file <路径>)
+                  bin/shiban-store raw list                 # 查原始证据（微格转写/课堂记录/笔记）
+                  bin/shiban-store raw read --name <证据文件>
+                  # 数据层职责：asset=沉淀可复用产物；raw=只登记的原始证据(同名拒绝、更正另存 v2)。
+                  # 个人数据(teacher_profile.json)及 L0 原始材料不回流仓库、不入 asset 索引。
                 工作区 data/shiban/ 仍是“会话内中间产物”，真正的纵向记忆在 ~/.shiban/data。
                 二者分工：中间产物推动当前闭环；持久层跨会话累积班级画像与教师偏好。
 

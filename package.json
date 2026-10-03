@@ -1,6 +1,6 @@
 {
   "name": "@local/dsh-shiban-preset",
-  "version": "0.4.1",
+  "version": "0.4.2",
   "private": true,
   "type": "module",
   "description": "师伴（shiban）Agent 预设 —— 面向师范生与新手教师的循证教学辅助 Agent",
